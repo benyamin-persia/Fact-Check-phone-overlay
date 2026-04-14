@@ -1,0 +1,10 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Theme.FactCheckOverlay" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/brand_primary</item>
+        <item name="colorSecondary">@color/brand_secondary</item>
+        <item name="colorSurface">@color/brand_surface</item>
+        <item name="android:colorBackground">@color/brand_bg</item>
+        <item name="android:textColor">@color/brand_text</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/brand_bg</item>
+    </style>
+</resources>
