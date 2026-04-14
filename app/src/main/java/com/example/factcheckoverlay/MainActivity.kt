@@ -2,7 +2,6 @@ package com.example.factcheckoverlay
 
 import android.content.Intent
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.text.method.LinkMovementMethod
@@ -55,6 +54,10 @@ class MainActivity : AppCompatActivity() {
             }
             if (preferences.baseUrl.isBlank()) {
                 Toast.makeText(this, "Add your backend URL in Settings first.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            if (preferences.openAiApiKey.isBlank()) {
+                Toast.makeText(this, "Add your OpenAI API key in Settings first.", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
             runFactCheck(input)
@@ -122,6 +125,8 @@ class MainActivity : AppCompatActivity() {
             append(if (overlayReady) "enabled" else "disabled")
             append(" | Accessibility: ")
             append(if (accessibilityEnabled) "enabled" else "disabled")
+            append(" | API key: ")
+            append(if (preferences.openAiApiKey.isNotBlank()) "saved" else "missing")
         }
     }
 

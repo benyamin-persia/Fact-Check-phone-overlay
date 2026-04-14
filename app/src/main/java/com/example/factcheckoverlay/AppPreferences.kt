@@ -9,13 +9,13 @@ class AppPreferences(context: Context) {
         get() = prefs.getString(KEY_BASE_URL, DEFAULT_BASE_URL).orEmpty()
         set(value) = prefs.edit().putString(KEY_BASE_URL, value.trim()).apply()
 
-    var bearerToken: String
-        get() = prefs.getString(KEY_BEARER_TOKEN, "").orEmpty()
-        set(value) = prefs.edit().putString(KEY_BEARER_TOKEN, value.trim()).apply()
+    var openAiApiKey: String
+        get() = prefs.getString(KEY_OPENAI_API_KEY, "").orEmpty()
+        set(value) = prefs.edit().putString(KEY_OPENAI_API_KEY, value.trim()).apply()
 
     companion object {
         private const val KEY_BASE_URL = "base_url"
-        private const val KEY_BEARER_TOKEN = "bearer_token"
+        private const val KEY_OPENAI_API_KEY = "openai_api_key"
         private const val DEFAULT_BASE_URL = ""
     }
 }

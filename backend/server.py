@@ -35,8 +35,15 @@ Rules:
 """
 
 
-def call_openai_fact_check(text: str) -> dict:
-    if not OPENAI_API_KEY:
+def extract_api_key(handler: BaseHTTPRequestHandler) -> str:
+    authorization = handler.headers.get("Authorization", "").strip()
+    if authorization.lower().startswith("bearer "):
+        return authorization[7:].strip()
+    return OPENAI_API_KEY
+
+
+def call_openai_fact_check(text: str, api_key: str) -> dict:
+    if not api_key:
         raise RuntimeError("OPENAI_API_KEY is not set.")
 
     payload = {
@@ -65,7 +72,7 @@ def call_openai_fact_check(text: str) -> dict:
         "https://api.openai.com/v1/responses",
         data=json.dumps(payload).encode("utf-8"),
         headers={
-            "Authorization": f"Bearer {OPENAI_API_KEY}",
+            "Authorization": f"Bearer {api_key}",
             "Content-Type": "application/json",
         },
         method="POST",
@@ -113,7 +120,8 @@ class FactCheckHandler(BaseHTTPRequestHandler):
                 self.send_json(400, {"error": "Missing 'text' field"})
                 return
 
-            result = call_openai_fact_check(text)
+            api_key = extract_api_key(self)
+            result = call_openai_fact_check(text, api_key)
             self.send_json(200, result)
         except Exception as exc:
             self.send_json(500, {"error": str(exc)})

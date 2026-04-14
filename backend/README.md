@@ -10,7 +10,6 @@ It calls OpenAI's Responses API with the web search tool enabled so the mobile a
 ## Run
 
 ```bash
-export OPENAI_API_KEY=your_key_here
 export OPENAI_MODEL=gpt-5
 python3 backend/server.py
 ```
@@ -18,10 +17,11 @@ python3 backend/server.py
 Then point the Android app settings to:
 
 ```text
-http://YOUR_PHONE_OR_SERVER_IP:8080/factcheck
+http://127.0.0.1:8080/factcheck
 ```
 
 ## Notes
 
-- The API key should stay on the backend, not in the APK.
+- The backend accepts the API key from the request `Authorization: Bearer ...` header.
+- It can also fall back to `OPENAI_API_KEY` from the environment if you prefer that setup.
 - If you expose this beyond your LAN, put it behind HTTPS and authentication.

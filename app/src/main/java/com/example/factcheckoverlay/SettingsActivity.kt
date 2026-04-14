@@ -18,11 +18,24 @@ class SettingsActivity : AppCompatActivity() {
 
         preferences = AppPreferences(this)
         binding.baseUrlInput.setText(preferences.baseUrl)
-        binding.bearerTokenInput.setText(preferences.bearerToken)
+        binding.apiKeyInput.setText(preferences.openAiApiKey)
 
         binding.saveButton.setOnClickListener {
-            preferences.baseUrl = binding.baseUrlInput.text?.toString().orEmpty()
-            preferences.bearerToken = binding.bearerTokenInput.text?.toString().orEmpty()
+            val baseUrl = binding.baseUrlInput.text?.toString().orEmpty()
+            val apiKey = binding.apiKeyInput.text?.toString().orEmpty()
+
+            if (baseUrl.isBlank()) {
+                Toast.makeText(this, R.string.backend_url_required, Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (apiKey.isBlank()) {
+                Toast.makeText(this, R.string.api_key_required, Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            preferences.baseUrl = baseUrl
+            preferences.openAiApiKey = apiKey
             Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show()
             finish()
         }

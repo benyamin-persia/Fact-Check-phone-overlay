@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Live Fact Check</string>
+    <string name="settings">Settings</string>
+    <string name="input_hint">Paste or share a tweet/post here</string>
+    <string name="check_now">Check Live Sources</string>
+    <string name="sources">Sources</string>
+    <string name="setup_summary">Enable overlay permission and the accessibility service. After that, the app watches visible screen text, waits for the screen to settle, and automatically fact-checks what you are reading.</string>
+    <string name="enable_overlay_permission">Enable Overlay Permission</string>
+    <string name="enable_accessibility_service">Enable Accessibility Service</string>
+    <string name="manual_test_label">Manual test or last shared text</string>
+    <string name="backend_url">Backend URL</string>
+    <string name="openai_api_key">OpenAI API key</string>
+    <string name="settings_help">Use a backend endpoint like http://127.0.0.1:8080/factcheck. The app sends the visible text plus your API key to that backend and expects JSON with verdict, confidence, summary, and sources.</string>
+    <string name="backend_url_required">Backend URL is required</string>
+    <string name="api_key_required">API key is required</string>
+    <string name="save">Save</string>
+    <string name="overlay_title">Live Fact Check</string>
+    <string name="accessibility_service_label">Screen Fact Check</string>
+    <string name="accessibility_service_description">Reads visible screen text, falls back to OCR screenshots when needed, and shows a fact-check overlay while you browse posts or articles.</string>
+</resources>

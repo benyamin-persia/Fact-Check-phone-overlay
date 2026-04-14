@@ -15,15 +15,20 @@ class FactCheckRepository(private val preferences: AppPreferences) {
             val payload = JSONObject()
                 .put("text", text)
 
+            if (preferences.baseUrl.isBlank()) {
+                error("Backend URL is not configured.")
+            }
+            if (preferences.openAiApiKey.isBlank()) {
+                error("OpenAI API key is not configured.")
+            }
+
             val connection = (URL(preferences.baseUrl).openConnection() as HttpURLConnection).apply {
                 requestMethod = "POST"
                 connectTimeout = 15000
                 readTimeout = 30000
                 doOutput = true
                 setRequestProperty("Content-Type", "application/json")
-                if (preferences.bearerToken.isNotBlank()) {
-                    setRequestProperty("Authorization", "Bearer ${preferences.bearerToken}")
-                }
+                setRequestProperty("Authorization", "Bearer ${preferences.openAiApiKey}")
             }
 
             OutputStreamWriter(connection.outputStream).use { writer ->

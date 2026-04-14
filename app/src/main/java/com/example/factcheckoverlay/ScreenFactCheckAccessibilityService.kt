@@ -13,10 +13,10 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.tasks.await
 import kotlin.coroutines.resume
 
@@ -38,11 +38,11 @@ class ScreenFactCheckAccessibilityService : AccessibilityService() {
         preferences = AppPreferences(this)
         repository = FactCheckRepository(preferences)
 
-        if (preferences.baseUrl.isBlank()) {
+        if (preferences.baseUrl.isBlank() || preferences.openAiApiKey.isBlank()) {
             overlayController.update(
                 appName = "Setup required",
-                status = "Add backend URL in app settings.",
-                summary = "The overlay is ready, but it needs a fact-check backend endpoint first.",
+                status = "Add backend URL and API key in app settings.",
+                summary = "The overlay is ready, but it needs a fact-check backend endpoint and your API key first.",
                 sources = ""
             )
         } else {
@@ -66,11 +66,11 @@ class ScreenFactCheckAccessibilityService : AccessibilityService() {
             return
         }
 
-        if (preferences.baseUrl.isBlank()) {
+        if (preferences.baseUrl.isBlank() || preferences.openAiApiKey.isBlank()) {
             overlayController.update(
                 appName = packageName,
-                status = "Backend not configured.",
-                summary = "Open the app and set the live fact-check endpoint first.",
+                status = "Setup incomplete.",
+                summary = "Open the app and set the live fact-check endpoint plus your API key first.",
                 sources = ""
             )
             return
